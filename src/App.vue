@@ -22,6 +22,11 @@ const addNoteHandler = () => {
   showModal.value = false
   newNote.value = ""
 } 
+
+const deleteNoteHandler = (id) => {
+  notes.value = notes.value.filter(note => note.id !== id )
+}
+
 </script>
 
 <template>
@@ -43,7 +48,10 @@ const addNoteHandler = () => {
       <div class="cards-container">
         <div class="card" v-for="note in notes" :key="note.id" :style="{backgroundColor: note.backgroundClr}">
           <p class="main-text">{{ note.text }}</p>
-          <p class="date">{{ note.date.toLocaleDateString() }}</p>
+          <div class="card-footer">
+            <p class="date">{{ note.date.toLocaleDateString() }}</p>
+            <button @click="deleteNoteHandler(note.id)">Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -142,6 +150,15 @@ const addNoteHandler = () => {
     gap: .5rem;
   }
 
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-footer button {
+    background-color: #cd4d4d
+  }
   .modal textarea {
     padding: .5rem;
     resize: none;
