@@ -1,21 +1,44 @@
 <script setup>
+import { ref } from "vue"
+
+const showModal = ref(false)
+const newNote = ref("")
+const notes = ref([])
+
+
+function getRandomColor() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+}
+
+const addNoteHandler = () => {
+  if (!newNote.value) return
+  
+  notes.value.push({ 
+    id: `${Math.ceil(Math.random()*1000000)}-${notes.value.length}`,
+    text: newNote.value,
+    date: new Date(),
+    backgroundClr: getRandomColor()
+  })
+  showModal.value = false
+  newNote.value = ""
+} 
 </script>
 
 <template>
   <main>
-    <div class="modal-container">
+    <div v-if="showModal" class="modal-container">
       <div class="overlay">
       </div>
       <div class="modal">
-        <textarea id="note" name="note" cols="20" rows="10" ></textarea>
-        <button>Add Note</button>
-        <button class="close">Close</button>
+        <textarea v-model="newNote" id="note" name="note" cols="20" rows="10" ></textarea>
+        <button @click="addNoteHandler">Add Note</button>
+        <button @click="showModal = false" class="close">Close</button>
       </div>
     </div>
     <div class="container">
       <header>
         <h1>Notes</h1>
-        <button>+</button>
+        <button @click="showModal = true">+</button>
       </header>
       <div class="cards-container">
         <div class="card">
@@ -107,10 +130,6 @@
     z-index: 10;
     display: grid;
     place-items: center;
-  }
-
-  .modal-container {
-    display: none;
   }
   .modal {
     width: 600px;
