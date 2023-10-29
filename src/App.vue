@@ -12,7 +12,7 @@ function getRandomColor() {
 
 const addNoteHandler = () => {
   if (!newNote.value) return
-  
+
   notes.value.push({ 
     id: `${Math.ceil(Math.random()*1000000)}-${notes.value.length}`,
     text: newNote.value,
@@ -30,7 +30,7 @@ const addNoteHandler = () => {
       <div class="overlay">
       </div>
       <div class="modal">
-        <textarea v-model="newNote" id="note" name="note" cols="20" rows="10" ></textarea>
+        <textarea v-model.trim="newNote" id="note" name="note" cols="20" rows="10" ></textarea>
         <button @click="addNoteHandler">Add Note</button>
         <button @click="showModal = false" class="close">Close</button>
       </div>
@@ -41,13 +41,9 @@ const addNoteHandler = () => {
         <button @click="showModal = true">+</button>
       </header>
       <div class="cards-container">
-        <div class="card">
-          <p class="main-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In atque laudantium consequuntur adipisci dicta ducimus.</p>
-          <p class="date">22/10-23</p>
-        </div>
-        <div class="card">
-          <p class="main-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In atque laudantium consequuntur adipisci dicta ducimus.</p>
-          <p class="date">22/10-23</p>
+        <div class="card" v-for="note in notes" :key="note.id" :style="{backgroundColor: note.backgroundClr}">
+          <p class="main-text">{{ note.text }}</p>
+          <p class="date">{{ note.date.toLocaleDateString() }}</p>
         </div>
       </div>
     </div>
