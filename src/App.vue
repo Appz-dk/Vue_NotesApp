@@ -3,6 +3,15 @@
 
 <template>
   <main>
+    <div class="modal-container">
+      <div class="overlay">
+      </div>
+      <div class="modal">
+        <textarea id="note" name="note" cols="20" rows="10" ></textarea>
+        <button>Add Note</button>
+        <button class="close">Close</button>
+      </div>
+    </div>
     <div class="container">
       <header>
         <h1>Notes</h1>
@@ -44,19 +53,22 @@
     font-size: 2.5rem;
   }
 
-  header button {
+  button {
     background-color: #1e1e1e;
     outline: none;
     border: none;
     border-radius: 8px;
     padding: .5rem 1.25rem;
     color: white;
-    font-size: 1.25rem;
     cursor: pointer;
   }
 
-  header button:hover {
+  button:hover {
     outline: 1px solid #eee
+  }
+
+  header button {
+    font-size: 1.25rem;
   }
 
   p {
@@ -85,4 +97,42 @@
     row-gap: 2rem;
   }
 
+  .overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .15;
+    background-color: white;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+  }
+
+  .modal-container {
+    display: none;
+  }
+  .modal {
+    width: 600px;
+    background-color: #2f2f2f;
+    z-index: 100;
+    border-radius: 8px;
+    padding: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .modal textarea {
+    padding: .5rem;
+    resize: none;
+  }
+
+  .modal .close {
+    background-color: #cd4d4d;
+  }
 </style>
